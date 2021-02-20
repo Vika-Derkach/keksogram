@@ -5,7 +5,7 @@ var simlarPictureTemplate = document
   .content.querySelector(".picture");
 var userPhoto = simlarPictureTemplate.querySelector("img");
 var pictures = document.querySelector(".pictures");
-for (var i = 0; i < 25; i++) {
+for (var i = 0; i < 26; i++) {
   //   var start = 15;
   //   // var end = 200;
   //   while (start <= 200) {
@@ -14,7 +14,7 @@ for (var i = 0; i < 25; i++) {
 
   var pictureList = [
     {
-      url: `photos/${i}.jpg`,
+      url: [],
       likes: [],
       comments: [
         "Всё отлично!",
@@ -41,22 +41,25 @@ var start = 15;
 while (start <= 200) {
   pictureList[0].likes.push(start++);
 }
-
-while (0 <= 50) {
-  pictureList[0].commentsQuantity.push(start++);
+var begin = 2;
+while (begin <= 50) {
+  pictureList[0].commentsQuantity.push(begin++);
+}
+for (var i = 1; i <= 26; i++) {
+  pictureList[0].url.push(`photos/${i}.jpg`);
 }
 console.log(pictureList[0].comments[1]);
-console.log(pictureList[0].likes);
+console.log(pictureList[0].url);
 
 // for (var i = 0; i < 25; i++) {
 var renderPhotos = function (photo) {
   var photoElement = simlarPictureTemplate.cloneNode(true);
   //   var image = photoElement.querySelector("img");
   //   image.src = pictureList[0].url;
-  for (var i = 0; i < 25; i++) {
-    photoElement.querySelector("img").src = pictureList[0].url[i];
-    //   galleryOverlay.appendChild(photoElement);
-  }
+  // for (var i = 0; i <= 25; i++) {
+  photoElement.querySelector("img").src = pictureList[0].url[i];
+  // }
+
   photoElement.querySelector(".picture-likes").textContent =
     pictureList[0].likes[
       Math.floor(Math.random() * pictureList[0].likes.length)
@@ -71,7 +74,12 @@ var renderPhotos = function (photo) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < 25; i++) {
+for (var i = 0; i < 26; i++) {
   fragment.appendChild(renderPhotos(pictureList[i]));
 }
 pictures.appendChild(fragment);
+
+var galleryOverlay = document.querySelector(".gallery-overlay");
+galleryOverlay.classList.remove("hidden");
+var bigImage = galleryOverlay.querySelector("img");
+bigImage.src = pictureList[0].url[2];
