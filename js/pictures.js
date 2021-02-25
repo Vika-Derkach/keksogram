@@ -38,7 +38,7 @@ for (var i = 0; i < 26; i++) {
   ];
 }
 var effectsList = [
-  " ",
+  "effects__preview--without",
   "effects__preview--chrome",
   "effects__preview--sepia",
   "effects__preview--marvin",
@@ -188,12 +188,21 @@ scalePin.ondragstart = function () {
 };
 
 var effectItems = document.querySelectorAll(".effects__item");
-
 var imgUploadPreview = document.querySelector(".img-upload__preview");
+
+var removeClassUnnesesery = function (indexWasClicked) {
+  effectsList.forEach((effect, index) => {
+    if (index !== indexWasClicked) {
+      imgUploadPreview.classList.remove(effectsList[index]);
+    }
+  });
+};
+
 console.log(effectItems[1]);
 effectItems.forEach((effectItem, index) => {
   effectItem.addEventListener("click", function () {
     imgUploadPreview.classList.add(effectsList[index]);
+    removeClassUnnesesery(index);
   });
 });
 //map, filter, reduce, find, findIndex
@@ -203,14 +212,6 @@ effectItems.forEach((effectItem, index) => {
 //   });
 // }
 
-var removeClassUnnesesery = function (indexWasClicked) {
-  effectsList.forEach((effect) => {
-    if (effect == indexWasClicked) {
-      imgUploadPreview.classList.remove(effectsList[indexWasClicked]);
-    }
-  });
-};
-removeClassUnnesesery();
 // effectItems[1].addEventListener("click", function () {
 //   imgUploadPreview.classList.add(effectsList[1]);
 //   // function remov()
