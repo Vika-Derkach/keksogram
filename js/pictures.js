@@ -5,6 +5,7 @@ var simlarPictureTemplate = document
   .content.querySelector(".picture__link");
 var userPhoto = simlarPictureTemplate.querySelector("img");
 var pictures = document.querySelector(".pictures");
+
 for (var i = 0; i < 26; i++) {
   //   var start = 15;
   //   // var end = 200;
@@ -65,8 +66,60 @@ console.log(pictureList[0].comments[1]);
 console.log(pictureList[0].url);
 console.log(pictureList[0].avatar);
 // for (var i = 0; i < 25; i++) {
+// var pictureImg = document.querySelectorAll(".picture__img");
+// var bigPicture = document.querySelector(".big-picture");
+// var bigPictureImg = bigPicture.querySelector(".big-picture__img");
+// var bigPictureImgSrc = bigPictureImg.querySelector("img");
+// console.log(pictureImg);
+// for (let i = 0; i < pictureList[0].url.length; i++) {
+//   pictureImg[i].addEventListener("click", function () {
+//     bigPicture.classList.remove("hidden");
+//   });
+//   console.log(pictureImg);
+// }
+
 var renderPhotos = function (photo) {
   var photoElement = simlarPictureTemplate.cloneNode(true);
+
+  var bigPicture = document.querySelector(".big-picture");
+  var pictureCancel = document.querySelector("#picture-cancel");
+  var bigPictureImg = bigPicture.querySelector(".big-picture__img");
+  var bigPictureImgSrc = bigPictureImg.querySelector("img");
+
+  // console.log(pictureImg);
+  // photoElement = bigPicture;
+  // for (let i = 0; i < pictureList[0].url.length; i++) {
+  photoElement.addEventListener("click", function (evt) {
+    bigPicture.classList.remove("hidden");
+    bigPictureImgSrc.src = evt.target.src;
+    console.log(evt.target);
+  });
+
+  // bigPictureImgSrc.src = pictureList[0].url[i];
+  // }
+  pictureCancel.addEventListener("click", function () {
+    bigPicture.classList.add("hidden");
+  });
+  document.addEventListener("keydown", function (evt) {
+    if (evt.keyCode === 27) {
+      bigPicture.classList.add("hidden");
+    }
+  });
+
+  bigPicture.querySelector(".likes-count").textContent =
+    pictureList[0].likes[
+      Math.floor(Math.random() * pictureList[0].likes.length)
+    ];
+
+  bigPicture.querySelector(".comments-count").textContent =
+    pictureList[0].commentsQuantity[
+      Math.floor(Math.random() * pictureList[0].commentsQuantity.length)
+    ];
+  bigPicture.querySelector(".social__caption").textContent =
+    pictureList[0].description[
+      Math.floor(Math.random() * pictureList[0].description.length)
+    ];
+
   //   var image = photoElement.querySelector("img");
   //   image.src = pictureList[0].url;
   // for (var i = 0; i <= 25; i++) {
@@ -83,6 +136,8 @@ var renderPhotos = function (photo) {
       Math.floor(Math.random() * pictureList[0].commentsQuantity.length)
     ];
   console.log(photoElement);
+  // var pictureImg = document.querySelectorAll(".picture__img");
+
   return photoElement;
 };
 
@@ -91,19 +146,25 @@ for (var i = 0; i < 26; i++) {
   fragment.appendChild(renderPhotos(pictureList[i]));
 }
 pictures.appendChild(fragment);
-var bigPicture = document.querySelector(".big-picture");
-// bigPicture.classList.remove("hidden");
-bigPicture.querySelector(".likes-count").textContent =
-  pictureList[0].likes[Math.floor(Math.random() * pictureList[0].likes.length)];
 
-bigPicture.querySelector(".comments-count").textContent =
-  pictureList[0].commentsQuantity[
-    Math.floor(Math.random() * pictureList[0].commentsQuantity.length)
-  ];
-bigPicture.querySelector(".social__caption").textContent =
-  pictureList[0].description[
-    Math.floor(Math.random() * pictureList[0].description.length)
-  ];
+// bigPictureImgSrc.src = pictureList[0].url[4];
+console.log(pictureList[0].url[1]);
+console.log(userPhoto);
+// var pictureLink = document.querySelectorAll(".picture__link");
+// var pictureImg = pictureLink.querySelector(".picture__img");
+// console.log(pictureLink);
+// console.log(pictureImg);
+// bigPicture.querySelector(".likes-count").textContent =
+//   pictureList[0].likes[Math.floor(Math.random() * pictureList[0].likes.length)];
+
+// bigPicture.querySelector(".comments-count").textContent =
+//   pictureList[0].commentsQuantity[
+//     Math.floor(Math.random() * pictureList[0].commentsQuantity.length)
+//   ];
+// bigPicture.querySelector(".social__caption").textContent =
+//   pictureList[0].description[
+//     Math.floor(Math.random() * pictureList[0].description.length)
+//   ];
 var socialComment = document.querySelectorAll(".social__comment");
 socialComment[0].querySelector(".social__text").textContent =
   pictureList[0].comments[
@@ -138,22 +199,23 @@ var scaleLine = imgUploadOverlay.querySelector(".scale__line");
 
 var scalePin = scaleLine.querySelector(".scale__pin");
 var scaleLevel = scaleLine.querySelector(".scale__level");
-
+var uploadCancel = imgUploadOverlay.querySelector("#upload-cancel");
 var scaleMain = "1%";
 //  scaleLevel.style.width;
 scaleLevel.style.width = scalePin.style.left = scaleMain;
 
-// uploadFile.addEventListener("click", function () {
-//   imgUploadOverlay.classList.remove = "hidden";
-// });
 uploadFile.addEventListener("click", function () {
   imgUploadOverlay.classList.remove("hidden");
 });
-
-// console.log(imgUploadOverlay);
-// scalePin.addEventListener("mousedown", function () {
-//   scalePin
-// });
+uploadCancel.addEventListener("click", function () {
+  imgUploadOverlay.classList.add("hidden");
+});
+document.addEventListener("keydown", function (evt) {
+  if (evt.keyCode === 27) {
+    imgUploadOverlay.classList.add("hidden");
+  }
+});
+// слайдер зміни , ползунок
 scalePin.onmousedown = function (event) {
   event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
@@ -205,6 +267,25 @@ effectItems.forEach((effectItem, index) => {
     removeClassUnnesesery(index);
   });
 });
+
+//слайдер верхній
+var resizeControlValue = document.querySelector(".resize__control--value");
+var resizeControlMinus = document.querySelector(".resize__control--minus");
+var resizeControlPlus = document.querySelector(".resize__control--plus");
+var resizeValue = ["25%", "50%", "75%", "100%"];
+let controlIndex;
+// for (var i = 3; i >= 0; i--) {
+resizeControlMinus.addEventListener("click", function () {
+  for (var i = 3; i >= 0; i--) {
+    // if (controlIndex === 3) {
+    resizeControlValue.value = resizeValue[3];
+    // } else {
+    // controlIndex--;
+  }
+
+  
+});
+//
 //map, filter, reduce, find, findIndex
 // for (let i = 0; i < 6; i++) {
 //   effectItems[i].addEventListener("click", function () {
