@@ -135,7 +135,7 @@ var renderPhotos = function (photo) {
     pictureList[0].commentsQuantity[
       Math.floor(Math.random() * pictureList[0].commentsQuantity.length)
     ];
-  console.log(photoElement);
+  // console.log(photoElement);
   // var pictureImg = document.querySelectorAll(".picture__img");
 
   return photoElement;
@@ -251,7 +251,7 @@ scalePin.ondragstart = function () {
 
 var effectItems = document.querySelectorAll(".effects__item");
 var imgUploadPreview = document.querySelector(".img-upload__preview");
-
+var imgUploadScale = document.querySelector(".img-upload__scale");
 var removeClassUnnesesery = function (indexWasClicked) {
   effectsList.forEach((effect, index) => {
     if (index !== indexWasClicked) {
@@ -259,33 +259,80 @@ var removeClassUnnesesery = function (indexWasClicked) {
     }
   });
 };
+imgUploadScale.style.display = "none";
+for (var i = 1; i <= 5; i++) {
+  effectItems[i].addEventListener("click", function () {
+    imgUploadScale.style.display = "block";
+  });
+}
 
+effectItems[0].addEventListener("click", function () {
+  imgUploadScale.style.display = "none";
+});
 console.log(effectItems[1]);
+
 effectItems.forEach((effectItem, index) => {
   effectItem.addEventListener("click", function () {
     imgUploadPreview.classList.add(effectsList[index]);
     removeClassUnnesesery(index);
   });
 });
+effectsList[1].style.filter = "grayscale(0.5)";
+// var effectChrome = document.querySelector(".effects__preview--chrome");
+// effectChrome.style.filter = "grayscale(0.2)";
+// var changeLevelEffect = function() {
+//   scaleLevel
+// }
+// scaleLevel
 
 //слайдер верхній
+
 var resizeControlValue = document.querySelector(".resize__control--value");
 var resizeControlMinus = document.querySelector(".resize__control--minus");
 var resizeControlPlus = document.querySelector(".resize__control--plus");
 var resizeValue = ["25%", "50%", "75%", "100%"];
-let controlIndex;
-// for (var i = 3; i >= 0; i--) {
-resizeControlMinus.addEventListener("click", function () {
-  for (var i = 3; i >= 0; i--) {
-    // if (controlIndex === 3) {
-    resizeControlValue.value = resizeValue[3];
-    // } else {
-    // controlIndex--;
-  }
+let controlIndex = 3;
 
-  
+var changeSizePic = function () {
+  if (controlIndex == 0) {
+    imgUploadPreview.style.transform = "scale(0.25)";
+  } else if (controlIndex == 1) {
+    imgUploadPreview.style.transform = "scale(0.50)";
+  } else if (controlIndex == 2) {
+    imgUploadPreview.style.transform = "scale(0.75)";
+  } else {
+    imgUploadPreview.style.transform = "scale(0.)";
+  }
+};
+
+resizeControlMinus.addEventListener("click", function () {
+  if (controlIndex <= 0) {
+    resizeControlValue.value = resizeValue[0];
+  } else {
+    resizeControlValue.value = resizeValue[controlIndex];
+    controlIndex--;
+  }
+  changeSizePic(controlIndex);
 });
-//
+resizeControlPlus.addEventListener("click", function () {
+  if (controlIndex >= 3) {
+    resizeControlValue.value = resizeValue[3];
+  } else {
+    resizeControlValue.value = resizeValue[controlIndex];
+    controlIndex++;
+  }
+  changeSizePic(controlIndex);
+});
+
+// if ((resizeControlValue.value = "100%")) {
+//   imgUploadPreview.style.transform = "scale(0.)";
+// } else if ((resizeControlValue.value = "75%")) {
+//   imgUploadPreview.style.transform = "scale(0.75)";
+// } else if ((resizeControlValue.value = "50%")) {
+//   imgUploadPreview.style.transform = "scale(0.50)";
+// } else {
+//   imgUploadPreview.style.transform = "scale(0.25)";
+// }
 //map, filter, reduce, find, findIndex
 // for (let i = 0; i < 6; i++) {
 //   effectItems[i].addEventListener("click", function () {
