@@ -817,6 +817,9 @@
   
     border-radius: 5px;
   }
+  .text__hashtags:invalid {
+    border-color: red;
+  }
   
   .text__description {
     width: 450px;

@@ -4,7 +4,11 @@ var simlarPictureTemplate = document
   .querySelector("#picture")
   .content.querySelector(".picture__link");
 var userPhoto = simlarPictureTemplate.querySelector("img");
+var imgUploadPreview = document.querySelector(".img-upload__preview");
 var pictures = document.querySelector(".pictures");
+var functionOnChangeScrool = (maxX, value) => {
+  console.log({ maxX, value });
+};
 
 for (var i = 0; i < 26; i++) {
   //   var start = 15;
@@ -38,13 +42,49 @@ for (var i = 0; i < 26; i++) {
     },
   ];
 }
+const shrink = (maxX, maxY, value) => {
+  return (value * maxY) / maxX;
+};
 var effectsList = [
-  "effects__preview--without",
-  "effects__preview--chrome",
-  "effects__preview--sepia",
-  "effects__preview--marvin",
-  "effects__preview--phobos",
-  "effects__preview--heat",
+  {
+    className: "effects__preview--without",
+  },
+  {
+    className: "effects__preview--chrome",
+    func: (maxX, value) => {
+      imgUploadPreview.style.filter = `grayscale(${
+        0.1 + shrink(maxX, 1, value)
+      })`;
+    },
+  },
+  {
+    className: "effects__preview--sepia",
+    func: (maxX, value) => {
+      imgUploadPreview.style.filter = `sepia(${0.1 + shrink(maxX, 1, value)})`;
+    },
+  },
+  {
+    className: "effects__preview--marvin",
+    func: (maxX, value) => {
+      imgUploadPreview.style.filter = `invert(${
+        10 + shrink(maxX, 100, value)
+      }%)`;
+    },
+  },
+  {
+    className: "effects__preview--phobos",
+    func: (maxX, value) => {
+      imgUploadPreview.style.filter = `blur(${1 + shrink(maxX, 2, value)}px)`;
+    },
+  },
+  {
+    className: "effects__preview--heat",
+    func: (maxX, value) => {
+      imgUploadPreview.style.filter = `brightness(${
+        1 + shrink(maxX, 2, value)
+      })`;
+    },
+  },
 ];
 console.log(effectsList);
 var start = 15;
@@ -231,12 +271,13 @@ scalePin.onmousedown = function (event) {
     if (newLeft < 0) {
       newLeft = 0;
     }
-    let rightEdge = scaleLine.offsetWidth - scalePin.offsetWidth;
+    let rightEdge = scaleLine.offsetWidth;
     if (newLeft > rightEdge) {
       newLeft = rightEdge;
     }
 
     scalePin.style.left = scaleLevel.style.width = newLeft + "px";
+    functionOnChangeScrool(scaleLine.offsetWidth, newLeft);
   }
 
   function onMouseUp() {
@@ -250,12 +291,12 @@ scalePin.ondragstart = function () {
 };
 
 var effectItems = document.querySelectorAll(".effects__item");
-var imgUploadPreview = document.querySelector(".img-upload__preview");
+
 var imgUploadScale = document.querySelector(".img-upload__scale");
 var removeClassUnnesesery = function (indexWasClicked) {
   effectsList.forEach((effect, index) => {
     if (index !== indexWasClicked) {
-      imgUploadPreview.classList.remove(effectsList[index]);
+      imgUploadPreview.classList.remove(effectsList[index].className);
     }
   });
 };
@@ -273,13 +314,15 @@ console.log(effectItems[1]);
 
 effectItems.forEach((effectItem, index) => {
   effectItem.addEventListener("click", function () {
-    imgUploadPreview.classList.add(effectsList[index]);
+    imgUploadPreview.classList.add(effectsList[index].className);
+    functionOnChangeScrool = effectsList[index].func;
     removeClassUnnesesery(index);
   });
 });
-effectsList[1].style.filter = "grayscale(0.5)";
-// var effectChrome = document.querySelector(".effects__preview--chrome");
-// effectChrome.style.filter = "grayscale(0.2)";
+
+// var greyScaleEffect = (effectsList[1].style.filter = "grayscale(0.5)");
+// console.log(greyScaleEffect);
+
 // var changeLevelEffect = function() {
 //   scaleLevel
 // }
@@ -323,6 +366,32 @@ resizeControlPlus.addEventListener("click", function () {
   }
   changeSizePic(controlIndex);
 });
+
+var inputWithTextHashtags = document.querySelector(".text__hashtags");
+var htagsList = [];
+inputWithTextHashtags.addEventListener("input", function () {
+  htagsList = inputWithTextHashtags.value.split(" ");
+  const latters = inputWithTextHashtags.value.split("");
+  latters.forEach((latter, index) => {
+    if (latter === "#" && index !== 0 && latters[index - 1] !== " ") {
+      inputWithTextHashtags.setCustomValidity("go fuck off.");
+    }
+  });
+  console.log(htagsList);
+});
+inputWithTextHashtags.addEventListener("invalid", function (evt) {
+  if (inputWithTextHashtags.validity.tooShort) {
+    inputWithTextHashtags.setCustomValidity("введите ще щось");
+  } else if (inputWithTextHashtags.validity.tooLong) {
+    inputWithTextHashtags.setCustomValidity("чот забагато");
+  }
+});
+
+// for (let i = 0; i < htagsList.length; i++) {
+//   htagsList[i].addEventListener("invalid", function (evt) {
+
+//   });
+// }
 
 // if ((resizeControlValue.value = "100%")) {
 //   imgUploadPreview.style.transform = "scale(0.)";
