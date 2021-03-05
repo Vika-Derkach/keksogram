@@ -49,4 +49,13 @@
       imgUploadOverlay.classList.add("hidden");
     }
   });
+
+  //відправляємо форму , і закриваємо вікно img-upload__overlay
+  var form = document.querySelector(".img-upload__form");
+  form.addEventListener("submit", function (evt) {
+    window.upload(new FormData(form), function (response) {
+      imgUploadOverlay.classList.add("hidden");
+    });
+    evt.preventDefault();
+  });
 })();
