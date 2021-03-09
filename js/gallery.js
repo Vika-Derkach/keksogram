@@ -98,11 +98,31 @@
 
   //получаємо фотки
   var successHandler = function (photos) {
+    var filterPopular = imgFilters.querySelector("#filter-popular");
+    var filterNew = imgFilters.querySelector("#filter-new");
+    var filterDiscussed = imgFilters.querySelector("#filter-discussed");
+
     var fragment = document.createDocumentFragment();
     for (let i = 0; i < 25; i++) {
       fragment.appendChild(renderPhotos(photos[i]));
     }
     pictures.appendChild(fragment);
+
+    var pictureAllFilter = pictures.querySelectorAll(".picture__link");
+    console.log(pictureAllFilter);
+    filterNew.addEventListener("click", function () {
+      pictureAllFilter.forEach((onePictue) => {
+        pictures.removeChild(onePictue);
+      });
+
+      for (let i = 0; i < 10; i++) {
+        fragment.appendChild(
+          renderPhotos(photos[Math.floor(Math.random() * photos.length)])
+        );
+      }
+      pictures.appendChild(fragment);
+    });
+
     // userDialog.querySelector(".setup-similar").classList.remove("hidden");
   };
   var errorHandler = function (errorMessage) {
@@ -119,4 +139,29 @@
     document.body.insertAdjacentElement("afterbegin", node);
   };
   window.load(successHandler, errorHandler);
+
+  //філтер фото зверху
+  var imgFilters = document.querySelector(".img-filters");
+  imgFilters.classList.remove("img-filters--inactive");
+  var imgFiltersButtons = imgFilters.querySelectorAll(".img-filters__button");
+  var removeClassUnnesesery = function (indexWasClicked) {
+    imgFiltersButtons.forEach((button, index) => {
+      if (index !== indexWasClicked) {
+        imgFiltersButtons[index].classList.remove(
+          "img-filters__button--active"
+        );
+      }
+    });
+  };
+  imgFiltersButtons.forEach((imgFiltersButton, index) => {
+    imgFiltersButton.addEventListener("click", function () {
+      imgFiltersButton.classList.add("img-filters__button--active");
+
+      removeClassUnnesesery(index);
+    });
+  });
+
+  // var filterPopular = imgFilters.querySelector("#filter-popular");
+  // var filterNew = imgFilters.querySelector("#filter-new");
+  // var filterDiscussed = imgFilters.querySelector("#filter-discussed");
 })();
