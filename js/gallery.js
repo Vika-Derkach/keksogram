@@ -103,27 +103,106 @@
     var filterDiscussed = imgFilters.querySelector("#filter-discussed");
 
     var fragment = document.createDocumentFragment();
+
     for (let i = 0; i < 25; i++) {
       fragment.appendChild(renderPhotos(photos[i]));
     }
     pictures.appendChild(fragment);
 
-    var pictureAllFilter = pictures.querySelectorAll(".picture__link");
-    console.log(pictureAllFilter);
+    // var removePreviousImg = function () {
+    //   // pictureAllFilter.forEach((onePictue) => {
+    //   //   pictures.removeChild(onePictue);
+    //   // });
+    // };
+    // console.log(pictureAllFilter);
+
     filterNew.addEventListener("click", function () {
+      var pictureAllFilter = pictures.querySelectorAll(".picture__link");
       pictureAllFilter.forEach((onePictue) => {
         pictures.removeChild(onePictue);
       });
-
-      for (let i = 0; i < 10; i++) {
+      // pictureAllFilter.forEach((onePictue) => {
+      //   pictures.removeChild(onePictue);
+      // });
+      // removePreviousImg();
+      // for (let i = 0; i < 10; i++) {
+      //   fragment.appendChild(
+      //     renderPhotos(photos[Math.floor(Math.random() * photos.length)])
+      //     // renderPhotos(shuffle(photos[i]))
+      //   );
+      //   // console.log(_.shuffle(_.range(1,1001)).slice(0,20))
+      // }
+      var uniquePictureIndex = new Set();
+      while (uniquePictureIndex.size < 10) {
+        uniquePictureIndex.add(Math.floor(Math.random() * photos.length));
+      }
+      for (let item of uniquePictureIndex) {
         fragment.appendChild(
-          renderPhotos(photos[Math.floor(Math.random() * photos.length)])
+          renderPhotos(photos[item])
+          // renderPhotos(shuffle(photos[i]))
         );
       }
       pictures.appendChild(fragment);
     });
 
-    // userDialog.querySelector(".setup-similar").classList.remove("hidden");
+    filterPopular.addEventListener("click", function () {
+      var pictureAllFilter = pictures.querySelectorAll(".picture__link");
+      pictureAllFilter.forEach((onePictue) => {
+        pictures.removeChild(onePictue);
+      });
+      // removePreviousImg();
+      // var pictureAllFilterCopy = pictureAllFilter.slice();
+      for (let i = 0; i < 25; i++) {
+        fragment.appendChild(renderPhotos(photos[i]));
+      }
+      pictures.appendChild(fragment);
+      // console.log(pictureAllFilterCopy.sort());
+    });
+    filterDiscussed.addEventListener("click", function () {
+      var pictureAllFilter = pictures.querySelectorAll(".picture__link");
+      pictureAllFilter.forEach((onePictue) => {
+        pictures.removeChild(onePictue);
+      });
+
+      for (let i = 0; i < 25; i++) {
+        // console.log(renderPhotos(sortAllPicturesCopy[i]));
+        var allPictures = [];
+      }
+      for (let i = 0; i < 25; i++) {
+        var pictureObject = photos[i];
+        var pushPicturesInMassive = allPictures.push(pictureObject);
+        // var sorter = comentsLength.sort();
+      }
+      // var fragmentCopy;
+      var allPicturesCopy = allPictures.slice();
+      var sortAllPicturesCopy = allPicturesCopy.sort(function (left, right) {
+        return right.comments.length - left.comments.length;
+      });
+      for (let i = 0; i < 25; i++) {
+        fragment.appendChild(renderPhotos(sortAllPicturesCopy[i]));
+        // console.log(renderPhotos(sortAllPicturesCopy[i]));
+      }
+      pictures.appendChild(fragment);
+      // for (let i = 0; i < 25; i++) {
+      //   // fragment.appendChild(renderPhotos(photos[i]));
+      //   console.log(renderPhotos(sortAllPicturesCopy[i]));
+      //   var allPictures = [];
+      // }
+      // for (let i = 0; i < 25; i++) {
+      //   var pictureObject = photos[i];
+      //   var pushPicturesInMassive = allPictures.push(pictureObject);
+      //   // var sorter = comentsLength.sort();
+      // }
+
+      // for (let i = 0; i < 25; i++) {
+      //   fragmentSimilar.appendChild(renderPhotos(photos[i]));
+      // }
+      console.log(allPictures);
+      console.log(sortAllPicturesCopy);
+      // console.log(photos[1]);
+      // fragmentSimilar = sortAllPicturesCopy;
+      pictures.appendChild(fragmentSimilar);
+    });
   };
   var errorHandler = function (errorMessage) {
     var node = document.createElement("div");
