@@ -22,11 +22,12 @@
   //       Math.floor(Math.random() * pictureList[0].avatar.length)
   //     ];
 
-  var socialCommentCount = document.querySelector(".social__comment-count");
-  socialCommentCount.classList.add("visually-hidden");
-  var socialLoadmore = document.querySelector(".social__comment-loadmore");
-  socialLoadmore.classList.add("visually-hidden");
+  // socialCommentCount.classList.add("visually-hidden");
 
+  // socialLoadmore.classList.add("visually-hidden");
+  // if (photo.comments.length > 5) {
+
+  // }
   var uploadFile = document.querySelector("#upload-file");
   window.imgUploadOverlay = document.querySelector(".img-upload__overlay");
   window.scaleLine = imgUploadOverlay.querySelector(".scale__line");
