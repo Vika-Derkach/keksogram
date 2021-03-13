@@ -31,7 +31,7 @@
   var uploadFile = document.querySelector("#upload-file");
   window.imgUploadOverlay = document.querySelector(".img-upload__overlay");
   window.scaleLine = imgUploadOverlay.querySelector(".scale__line");
-
+  window.imgUploadInput = document.querySelector(".img-upload__input");
   window.scalePin = scaleLine.querySelector(".scale__pin");
   window.scaleLevel = scaleLine.querySelector(".scale__level");
   var uploadCancel = imgUploadOverlay.querySelector("#upload-cancel");
@@ -41,9 +41,11 @@
 
   uploadFile.addEventListener("click", function () {
     imgUploadOverlay.classList.remove("hidden");
+    imgUploadInput.classList.remove("visually-hidden");
   });
   uploadCancel.addEventListener("click", function () {
     imgUploadOverlay.classList.add("hidden");
+    imgUploadInput.classList.add("visually-hidden");
   });
   document.addEventListener("keydown", function (evt) {
     if (evt.keyCode === 27) {
