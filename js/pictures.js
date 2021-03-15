@@ -48,13 +48,13 @@
   for (var i = 1; i <= 5; i++) {
     effectItems[i].addEventListener("click", function () {
       imgUploadScale.style.display = "block";
+      scalePin.style.left = window.scaleLevel.style.width = "2px";
     });
   }
 
   effectItems[0].addEventListener("click", function () {
     imgUploadScale.style.display = "none";
   });
-  console.log(effectItems[1]);
 
   effectItems.forEach((effectItem, index) => {
     effectItem.addEventListener("click", function () {
